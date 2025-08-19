@@ -6,7 +6,7 @@ from langgraph.graph.message import add_messages
 from langgraph.graph import StateGraph, START, END
 from langgraph.prebuilt import ToolNode
 from langgraph.checkpoint.memory import MemorySaver
-from scout.tools import query_db, generate_visualization
+from scout.tools import query_db, generate_visualization, get_weather
 from scout.prompts import prompts
 
 
@@ -29,7 +29,8 @@ class Agent:
     def __init__(
             self, 
             name: str, 
-            tools: List = [query_db, generate_visualization],
+            tools: List = [query_db, generate_visualization, get_weather
+            ],
             model: str = "gpt-4.1-mini-2025-04-14", 
             system_prompt: str = "You are a helpful assistant.",
             temperature: float = 0.1
@@ -76,7 +77,8 @@ class Agent:
         builder.add_conditional_edges("chatbot", router, ["tools", END])
         builder.add_edge("tools", "chatbot")
 
-        return builder.compile(checkpointer=MemorySaver())
+        # return builder.compile(checkpointer=MemorySaver())
+        return builder.compile()
     
 
     def inspect_graph(self):

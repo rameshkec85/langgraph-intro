@@ -194,3 +194,37 @@ if 'fig' in locals() or 'fig' in globals():
         # Get the error message
         error_message = str(e)
         return f"Error executing visualization code: {error_message}"
+
+
+@tool
+def get_weather(city: str) -> str:
+    """Get weather information for a city.
+    
+    Args:
+        city: The name of the city to get weather for.
+        
+    Returns:
+        str: A dummy weather report for the specified city.
+    """
+    import random
+    
+    # Dummy weather data
+    conditions = ["sunny", "cloudy", "rainy", "partly cloudy", "stormy"]
+    temperatures = list(range(15, 35))  # 15-35°C
+    
+    condition = random.choice(conditions)
+    temp = random.choice(temperatures)
+    humidity = random.randint(30, 90)
+    
+    weather_report = f"""
+🌤️ **Weather Report for {city.title()}**
+    
+**Condition:** {condition.capitalize()}
+**Temperature:** {temp}°C
+**Humidity:** {humidity}%
+**Wind:** {random.randint(5, 25)} km/h
+
+*This is a dummy weather report for demonstration purposes.*
+"""
+    
+    return weather_report
